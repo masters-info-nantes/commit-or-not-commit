@@ -1,0 +1,12 @@
+language: java
+script: mvn clean verify -f resources/fr.univnantes.alma.releng/pom.xml
+jdk: oraclejdk8
+deploy:
+  provider: releases
+  api_key:
+    secure: 
+  file_glob: true
+  file: resources/fr.univnantes.alma.repository/target/products/ALMAServer-*.zip
+  on:
+    tags: true
+    repo: masters-info-nantes/commit-or-not-commit
