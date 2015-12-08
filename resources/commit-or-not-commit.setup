@@ -5,26 +5,24 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:git="http://www.eclipse.org/oomph/setup/git/1.0"
     xmlns:jdt="http://www.eclipse.org/oomph/setup/jdt/1.0"
-    xmlns:mylyn="http://www.eclipse.org/oomph/setup/mylyn/1.0"
-    xmlns:pde="http://www.eclipse.org/oomph/setup/pde/1.0"
     xmlns:predicates="http://www.eclipse.org/oomph/predicates/1.0"
     xmlns:projects="http://www.eclipse.org/oomph/setup/projects/1.0"
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
     xmlns:setup.workingsets="http://www.eclipse.org/oomph/setup/workingsets/1.0"
-    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore http://www.eclipse.org/oomph/setup/mylyn/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Mylyn.ecore http://www.eclipse.org/oomph/setup/pde/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/PDE.ecore http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore"
-    name="acceleo"
-    label="Acceleo">
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore"
+    name="commit-or-not-commit"
+    label="commit-or-not-commit">
   <setupTask
       xsi:type="jdt:JRETask"
-      version="JavaSE-1.6"
-      location="${jre.location-1.6}">
+      version="JavaSE-1.8"
+      location="${jre.location-1.8}">
     <description>Define the JRE needed to compile and run the Java projects of ${scope.project.label}</description>
   </setupTask>
   <setupTask
       xsi:type="setup:EclipseIniTask"
       option="-Xmx"
-      value="2048m"
+      value="1024m"
       vm="true">
     <description>Set the heap space needed to work with the projects of ${scope.project.label}</description>
   </setupTask>
@@ -39,45 +37,45 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
-      value="None"
-      defaultValue="None"/>
-  <setupTask
-      xsi:type="setup:VariableTask"
-      id="acceleo.target.platform"
-      name="acceleo.target.platform"
-      defaultValue="Acceleo Mars Target Platform"
-      label="Acceleo Target Platform">
-    <description>The target platform used to work on Acceleo</description>
-  </setupTask>
+      defaultValue="Mars"
+      storageURI="scope://Workspace"/>
   <setupTask
       xsi:type="setup.p2:P2Task">
     <requirement
-        name="net.sf.eclipsecs.feature.group"/>
+        name="edu.umd.cs.findbugs.plugin.eclipse.feature.group"/>
+    <repository
+        url="http://findbugs.cs.umd.edu/eclipse"/>
     <requirement
-        name="fr.obeo.releng.targetplatform-feature.feature.group"/>
+        name="org.eclipse.oomph.setup.projects"/>
+    <repository
+        url="http://download.eclipse.org/oomph/updates/milestone/latest"/>
+    <requirement
+        name="net.sf.eclipsecs.feature.group"/>
+    <repository
+        url="http://eclipse-cs.sourceforge.net/update/"/>
     <requirement
         name="org.eclipse.m2e.feature.feature.group"/>
     <repository
-        url="http://mbarbero.github.io/fr.obeo.releng.targetplatform/p2/"/>
-    <repository
-        url="http://eclipse-cs.sourceforge.net/update/"/>
-    <repository
         url="http://download.eclipse.org/releases/mars"/>
+    <requirement
+        name="fr.obeo.releng.targetplatform-feature.feature.group"/>
+    <repository
+        url="http://mbarbero.github.io/fr.obeo.releng.targetplatform/p2/"/>
     <description>Install the tools needed in the IDE to work with the source code for ${scope.project.label}</description>
   </setupTask>
   <setupTask
       xsi:type="git:GitCloneTask"
-      id="git.clone.acceleo"
-      remoteURI="acceleo/org.eclipse.acceleo">
+      id="git.clone"
+      remoteURI="masters-info-nantes/commit-or-not-commit">
     <annotation
         source="http://www.eclipse.org/oomph/setup/InducedChoices">
       <detail
           key="inherit">
-        <value>eclipse.gerrit.remoteURIs</value>
+        <value>github.remoteURIs</value>
       </detail>
       <detail
           key="label">
-        <value>${scope.project.label} Gerrit repository</value>
+        <value>${scope.project.label} Github repository</value>
       </detail>
       <detail
           key="target">
@@ -89,181 +87,40 @@
   <setupTask
       xsi:type="setup.workingsets:WorkingSetTask">
     <workingSet
-        name="Acceleo"
-        id="org.eclipse.acceleo">
-      <predicate
-          xsi:type="predicates:AndPredicate">
-        <operand
-            xsi:type="predicates:NaturePredicate"
-            nature="org.eclipse.pde.PluginNature"/>
-        <operand
-            xsi:type="predicates:NotPredicate">
-          <operand
-              xsi:type="predicates:NamePredicate"
-              pattern=".*query.*"/>
-        </operand>
-        <operand
-            xsi:type="predicates:NotPredicate">
-          <operand
-              xsi:type="predicates:NamePredicate"
-              pattern=".*tests.*"/>
-        </operand>
-        <operand
-            xsi:type="predicates:NotPredicate">
-          <operand
-              xsi:type="predicates:NamePredicate"
-              pattern=".*maven.*"/>
-        </operand>
-      </predicate>
-    </workingSet>
-    <workingSet
-        name="Acceleo Features"
-        id="org.eclipse.acceleo.features">
-      <predicate
-          xsi:type="predicates:NaturePredicate"
-          nature="org.eclipse.pde.FeatureNature"/>
-    </workingSet>
-    <workingSet
-        name="Acceleo Releng"
-        id="org.eclipse.acceleo.releng">
+        name="${scope.project.name}">
       <predicate
           xsi:type="predicates:OrPredicate">
         <operand
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.acceleo.targetplatforms"/>
+            pattern="fr.univnantes.alma.oomph"/>
         <operand
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.acceleo-updatesite"/>
+            pattern="fr.univnantes.alma.resources"/>
         <operand
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.acceleo.releng"/>
+            pattern="fr.univnantes.alma.server"/>
         <operand
-            xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.acceleo.query.build"/>
-      </predicate>
-    </workingSet>
-    <workingSet
-        name="Acceleo Tests"
-        id="org.eclipse.acceleo.tests">
-      <predicate
-          xsi:type="predicates:AndPredicate">
-        <operand
-            xsi:type="predicates:NamePredicate"
-            pattern=".*tests.*"/>
-        <operand
-            xsi:type="predicates:NotPredicate">
-          <operand
-              xsi:type="predicates:NamePredicate"
-              pattern=".*query.*"/>
-        </operand>
-        <operand
-            xsi:type="predicates:NotPredicate">
-          <operand
-              xsi:type="predicates:NamePredicate"
-              pattern=".*maven.*"/>
-        </operand>
-      </predicate>
-    </workingSet>
-    <workingSet
-        name="Acceleo Query Language"
-        id="org.eclipse.acceleo.query">
-      <predicate
-          xsi:type="predicates:AndPredicate">
-        <operand
-            xsi:type="predicates:NamePredicate"
-            pattern=".*query.*"/>
-        <operand
-            xsi:type="predicates:NotPredicate">
-          <operand
-              xsi:type="predicates:NamePredicate"
-              pattern=".*tests.*"/>
-        </operand>
-        <operand
-            xsi:type="predicates:NaturePredicate"
-            nature="org.eclipse.pde.PluginNature"/>
-      </predicate>
-    </workingSet>
-    <workingSet
-        name="Acceleo Query Language Tests"
-        id="org.eclipse.acceleo.query.tests">
-      <predicate
-          xsi:type="predicates:AndPredicate">
-        <operand
-            xsi:type="predicates:NamePredicate"
-            pattern=".*query.*"/>
-        <operand
-            xsi:type="predicates:NamePredicate"
-            pattern=".*tests.*"/>
+            xsi:type="predicates:RepositoryPredicate"
+            project="commit-or-not-commit"/>
       </predicate>
     </workingSet>
     <description>The dynamic working sets for ${scope.project.label}</description>
   </setupTask>
   <setupTask
-      xsi:type="setup:PreferenceTask"
-      key="/instance/org.eclipse.pde.api.tools/missing_default_api_profile"
-      value="Ignore">
-    <description>Ignore &quot;Plug-in Development/API Baselines&quot;</description>
-  </setupTask>
-  <setupTask
       xsi:type="projects:ProjectsImportTask"
-      id="org.eclipse.acceleo.project.import">
+      id="fr.univnantes.project.import">
     <sourceLocator
-        rootFolder="${git.clone.acceleo.location}/features"/>
+        rootFolder="${git.clone.location}/resources/fr.univnantes.alma.resources"/>
     <sourceLocator
-        rootFolder="${git.clone.acceleo.location}/plugins"/>
+        rootFolder="${git.clone.location}/resources/fr.univnantes.alma.oomph"/>
     <sourceLocator
-        rootFolder="${git.clone.acceleo.location}/releng"/>
-    <sourceLocator
-        rootFolder="${git.clone.acceleo.location}/tests">
-      <excludedPath>org.eclipse.acceleo.maven.tests</excludedPath>
-      <excludedPath>org.eclipse.acceleo.maven.plugin.tests</excludedPath>
-    </sourceLocator>
-    <sourceLocator
-        rootFolder="${git.clone.acceleo.location}/query"/>
-    <description>Import the Acceleo projects in the workspace</description>
+        rootFolder="${git.clone.location}/bundles/fr.univnantes.alma.server"/>
+    <description></description>
   </setupTask>
-  <setupTask
-      xsi:type="pde:TargetPlatformTask"
-      id="org.eclipse.acceleo.target.platform"
-      name="${acceleo.target.platform}">
-    <description>The Target Platform used to start working on Acceleo</description>
-  </setupTask>
-  <setupTask
-      xsi:type="mylyn:MylynBuildsTask"
-      serverURL="https://hudson.eclipse.org/acceleo">
-    <buildPlan
-        name="master-gerrit"/>
-    <buildPlan
-        name="acceleo-master"/>
-    <buildPlan
-        name="publish-nightly"/>
-    <buildPlan
-        name="m2t-acceleo-3.5"/>
-    <buildPlan
-        name="m2t-acceleo-3.4"/>
-    <buildPlan
-        name="m2t-acceleo-3.3"/>
-    <buildPlan
-        name="m2t-acceleo-3.2"/>
-    <buildPlan
-        name="m2t-acceleo-3.1"/>
-    <buildPlan
-        name="m2t-acceleo-3.0"/>
-  </setupTask>
-  <setupTask
-      xsi:type="mylyn:MylynQueriesTask"
-      repositoryURL="https://bugs.eclipse.org/bugs">
-    <query summary="Open bugs"
-        url="https://bugs.eclipse.org/bugs/buglist.cgi?bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;list_id=12446231&amp;order=Importance&amp;product=Acceleo"/>
-  </setupTask>
-  <setupTask
-      xsi:type="setup:EclipseIniTask"
-      option="-Doomph.redirection.accelleo="
-      value="https://git.eclipse.org/c/acceleo/org.eclipse.acceleo.git/plain/releng/org.eclipse.acceleo.releng/Acceleo.setup->${git.clone.acceleo.location|uri}/releng/org.eclipse.acceleo.releng/Acceleo.setup"
-      vm="true"/>
-  <stream name="master"/>
+  <stream name="master"
+      label="Master"/>
   <logicalProjectContainer
       xsi:type="setup:ProjectCatalog"
-      href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']"/>
-  <description>Acceleo is an open source code generator used to generate any kind of text files from EMF models.</description>
+      href="index:/org.eclipse.setup#//@projectCatalogs[name='com.github']"/>
+  <description>commit-or-not-commit provides cool stuff.</description>
 </setup:Project>
