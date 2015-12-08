@@ -4,7 +4,7 @@ jdk: oraclejdk8
 deploy:
   provider: releases
   api_key:
-    secure: 
+    secure: aLCRiFMtxHPFe98wQRSkgkPhrm81vrcWddfLHRRFlFQMy4D4yY1imk8n0bQtos2gvbmlyUDJu7TENeiHmgqfTdWbRjLr7xBrbPA91x1BLTmbLyRfKrR4SWQuuZ8nPb0VeOW9eDQrJjlmPWrYp0gD9sJPeslN6RjV+zOaK1ZhdEQuL7f1fPskDb/DQYM7N63PydtVESEGXhYnriW6oFmNTuohjNaQkeUq5KPAaW2scPIrKjvoyRRmQ9W5AGg2G5bIQm/bzW71kbznaPe8gFfpNARVbZ4zH0XsfTet2z3JygySvw9cxVVm4d7lgeswCvCVUjiz1yFTc6n5qHcab7KT/Ne3zhsSLDMBY6Fni8oier0+d6EmXBXElWy6mWyJRCkcaC8oRVvtu0JA3coGHoVFsOYTxhzckZmub//NKkJhLp/Rx1g8q6BLReLGbjYpOh8Ju/nRiv6PLPyHXFY/OQ9ZnNYFwqYVR1fGswrUtldHF2tPLld/wmeLbkBLDkaDg2VJTx5ryMjiSYYGNdKwGS4zCdkpDCGwum+8cSKktoIkbmNetme+St+MbKIpUD2zmGP6rdLrTBxLw2vx+YnPQ/QaeBEN0nRM87zOtLQuuzHbfJRJxmoRWGS/r7H7VLr0oVv49FXot3Q1p060WYzUWeyCyYilvoJkyLv3JXOoR99iWbY=
   file_glob: true
   file: resources/fr.univnantes.alma.repository/target/products/ALMAServer-*.zip
   on:
